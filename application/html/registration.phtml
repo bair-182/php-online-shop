@@ -1,0 +1,250 @@
+<!-- Form validation script -->
+<?php require_once './../handlers/registration_form_validation.php';?>
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: #f5f5f5;
+            font-family: sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            width: 400px;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 25px;
+            margin: 20px auto;
+            position: relative;
+            z-index: 1;
+            border-top: 5px solid #f5a81a;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+
+        }
+
+        h2 {
+            font-size: 1.5em;
+            line-height: 1.5em;
+            margin: 0;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+
+        .input-field {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+
+        .input-field i {
+            color: #333;
+            height: 22px;
+            width: 30px;
+            padding-top: 10px;
+            border: 1px solid #cccccc;
+            border-right: none;
+            text-align: center;
+        }
+
+        .input-field input:hover {
+            background: #fafafa;
+        }
+
+        .input-field input[type=text],
+        .input-field input[type=email],
+        .input-field input[type=password] {
+            width: 100%;
+            padding: 8px 10px;
+            height: 35px;
+            border: 1px solid #cccccc;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+            border: 1px solid #f5ba1a;
+            background: #fafafa;
+        }
+
+        .select-option {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-option select {
+            display: inline-block;
+            width: 100%;
+            height: 35px;
+            padding: 0 15px;
+            cursor: pointer;
+            color: #7b7b7b;
+            border: 1px solid #cccccc;
+            border-radius: 0;
+            background: #fff;
+            appearance: none;
+        }
+
+        .select-arrow {
+            position: absolute;
+            top: calc(50% - 4px);
+            right: 15px;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            border-width: 8px 5px 0 5px;
+            border-style: solid;
+            border-color: #7b7b7b transparent transparent transparent;
+        }
+
+        input[type=submit] {
+            background: #f5961a;
+            height: 35px;
+            line-height: 35px;
+            width: 100%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .container img {
+            border-radius: 50%;
+            border: 1px;
+            width:100px;
+            height:100px;
+        }
+
+        input[type=submit]:hover {
+            background: #d17f13;
+        }
+
+        .form-control:focus {
+            display: flex;
+            margin-top: 20px;
+            border-color: #000;
+            box-shadow: none;
+        }
+        .error {
+            color: red;
+            font-weight: 400;
+            display: block;
+            padding: 6px 0 6px 0;
+            margin-top: -26px;
+            font-size: 14px;
+        }
+        .form-control.error {
+            border-color: red;
+            padding: .375rem .75rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div>
+        <img alt="pikachu" src="https://sun9-14.userapi.com/impg/nxv_FrFaQTsWgp9Bhk4lozgWQSmL8X17idBahw/Ey9DSkmicXs.jpg?size=320x320&quality=96&sign=a99351309c4ba7c658cff550b3a29a4b&c_uniq_tag=6PHQW5XRnYcABeYP52pwcHmslhXm5G7SUBqFcGbUNAg&type=album" />
+    </div>
+    <h2>Registration Form</h2>
+    <form action="" method="POST">
+        <div class="input-field">
+            <i class="fa fa-user"></i>
+            <input type="text" name="name" placeholder="First Name" value="<?php echo $_POST["name"] ?? ''; ?>" />
+        </div>
+        <div class="form-control">
+            <?php if (isset($nameEmptyErr)) {
+                echo $nameEmptyErr;
+            } ?>
+            <?php if (isset($nameErr)) {
+                echo $nameErr;
+            } ?>
+        </div>
+        <div class="input-field">
+            <i class="fa fa-user"></i>
+            <input type="text" name="surname" placeholder="Last Name" value="<?php echo $_POST["surname"] ?? ''; ?>" required />
+        </div>
+        <div class="form-control">
+            <?php if (isset($surnameEmptyErr)) {
+                echo $surnameEmptyErr;
+            } ?>
+            <?php if (isset($surnameErr)) {
+                echo $surnameErr;
+            } ?>
+        </div>
+        <div class="input-field">
+            <i class="fa fa-envelope"></i>
+            <input type="email" name="email" placeholder="Email" value="<?php echo $_POST["email"] ?? ''; ?>" required />
+        </div>
+        <div class="form-control">
+            <?php if (isset($emailEmptyErr)) {
+                echo $emailEmptyErr;
+            } ?>
+            <?php if (isset($emailErr)) {
+                echo $emailErr;
+            } ?>
+        </div>
+        <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="password" placeholder="Password" required />
+        </div>
+        <div class="form-control">
+            <?php if (isset($passwordErr)) {
+                echo $passwordErr;
+            } ?>
+        </div>
+        <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="cpassword" placeholder="Re-type Password" required />
+        </div>
+        <div class="form-control">
+            <?php if (isset($cpasswordErr)) {
+                echo $cpasswordErr;
+            } ?>
+        </div>
+        <div class="input-field">
+            <input type="radio" name="gender" value="male" class="radio"
+            <?php if (isset($_POST['gender']) && $_POST['gender'] == 'male'): ?>checked='checked'<?php endif; ?> /> Male
+            <input type="radio" name="gender" value="female"  class="radio"
+            <?php if (isset($_POST['gender']) && $_POST['gender'] ==  'female'): ?>checked='checked'<?php endif; ?> /> Female
+        </div>
+        <div class="form-control">
+            <?php if (isset($genderEmptyErr)) {
+                echo $genderEmptyErr;
+            } ?>
+        </div>
+        <div class="input-field select-option">
+            <select name="country">
+                <option value="" disabled selected>Select a country</option>
+                <option value="Russia">Russia</option>
+                <option value="Romania">Romania</option>
+                <option value="Rwanda">Rwanda</option>
+            </select>
+            <div class="select-arrow"></div>
+        </div>
+        <div class="input-field">
+            <input type="checkbox" id="terms">
+            <label for="terms">I agree with terms and conditions</label>
+        </div>
+        <div class="input-field">
+            <input type="checkbox" id="newsletter">
+            <label for="newsletter">I want to receive the newsletter</label>
+        </div>
+        <input class="button" name="foo" type="submit" value="Register" >
+    </form>
+</div>
+</body>
+</html>
