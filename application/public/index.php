@@ -11,8 +11,8 @@ if ($uri === '/registration') {
     $obj = new UserController();
     $obj->login();
 } elseif ($uri === '/home') {
-    require_once "./../Controller/UserController.php";
-    $obj = new UserController();
+    require_once "./../Controller/IndexController.php";
+    $obj = new indexController();
     $obj->homePageControl();
 }
 

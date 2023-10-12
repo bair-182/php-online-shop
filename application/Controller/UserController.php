@@ -2,6 +2,15 @@
 
 class UserController
 {
+    private User $userModel;
+
+    public function __construct()
+    {
+        require_once "./../Model/User.php";
+        $this->userModel = new User();
+    }
+
+
     public function registrate(): void
     {
         $method = $_SERVER['REQUEST_METHOD'];
@@ -9,7 +18,7 @@ class UserController
         if ($method === 'POST') {
 
             $data = $_POST; // работаем с $data
-            $errors = $this->validate($data);
+            $errors = $this->validateRegistration($data);
 
             if (empty($errors)) {
                 $name = $data['name'];
@@ -19,9 +28,7 @@ class UserController
                 $gender = $data['gender'];
                 $countryOption = $data['country'];
 
-                $pdo = new PDO("pgsql:host=postgres;dbname=postgres", "postgres", "postgres");
-                $stmt = $pdo->prepare("INSERT INTO users (name, surname, email, password, gender, country) VALUES (:name, :surname, :email, :password, :gender, :country)");
-                $stmt->execute(['name' => $name, 'surname' => $surname, 'email' => $email, 'password' => $hashedPassword, 'gender' => $gender, 'country' => $countryOption]);
+                $this->userModel->createUser($data);
 
                 header('Location: /login');
             }
@@ -35,19 +42,14 @@ class UserController
         if (!isset($_SESSION['user_id'])) {
 
             $data = $_POST; // работаем с $data
-            $errors = $this->validate($data);
+            $errors = $this->validateLogin($data);
             $method = $_SERVER['REQUEST_METHOD'];
 
             if ($method === 'POST') {
                 $email = $data['email'];
                 $password = $data['password'];
 
-
-                $pdo = new PDO("pgsql:host=postgres;dbname=postgres", "postgres", "postgres");
-                $stmt = $pdo->prepare("SELECT * FROM users  WHERE email=:email");
-                $stmt->execute(['email' => $email]);
-                $user = $stmt->fetch();
-
+                $user = $this->userModel->getOnlyEmail($email);
 
                 if (isset($user['email'])) {
                     if ($user && password_verify($password, $user['password'])) {
@@ -66,30 +68,9 @@ class UserController
         }
     }
 
-    public function homePageControl(): void
-    {
-        session_start();
-
-        if (isset($_SESSION['user_id'])) {
-            $pdo = new PDO("pgsql:host=postgres;dbname=postgres", "postgres", "postgres");
-
-            $res = $pdo->prepare("SELECT * FROM products");
-            $res->execute();
-            $pokemon = $res->fetchAll();
-
-            require_once './../View/home.phtml';
-        } else {
-            header('Location: /login');
-        }
-    }
-
-    private function validate (array $data):array
+    private function validateRegistration (array $data):array
     {
         $errors = [];
-        $uri = $_SERVER['REQUEST_URI'];
-
-        if ($uri === '/registration')
-        {
             if (isset($data["foo"])) {
 
                 $name = $this->filterInput($data["name"]) ?? null;
@@ -120,10 +101,8 @@ class UserController
                 if (empty($email)) {
                     $errors['email'] = "Адрес электронной почты нельзя оставлять пустым.";
                 } // E-mail format validation
-                else if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $email)) {
+                else if (!preg_match("/^([a-z0-9+_\-]+)(\.[a-z0-9+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $email)) {
                     $errors['email'] = "Формат электронной почты недопустим.";
-                } else {
-                    $data['email'] = $email;
                 }
 
                 // PasswordValidation
@@ -149,29 +128,29 @@ class UserController
                 // Radio button validation
                 if (empty($gender)) {
                     $errors['gender'] = "Укажите свой пол.";
-                } else {
-                    $data['gender'] = $gender;
                 }
             }
-        } elseif ($uri === '/login') {
-            if (isset($data["foo"])) {
+        return $errors;
+    }
 
-                $email = $this->filterInput($data["email"]) ?? null;
-                $password = $this->filterInput($data["password"]);
+    private function validateLogin(array $data):array
+    {
+        $errors = [];
+        if (isset($data["foo"])) {
 
-                // Email validation
-                if (empty($email)) {
-                    $errors['email'] = "Адрес электронной почты нельзя оставлять пустым.";
-                } // E-mail format validation
-                else if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $email)) {
-                    $errors['email'] = "Формат электронной почты недопустим.";
-                } else {
-                    $data['email'] = $email;
-                }
-                // PasswordValidation
-                if(empty($password)) {
-                    $errors['password'] = 'Пожалуйста, введите пароль';
-                }
+            $email = $this->filterInput($data["email"]) ?? null;
+            $password = $this->filterInput($data["password"]);
+
+            // Email validation
+            if (empty($email)) {
+                $errors['email'] = "Адрес электронной почты нельзя оставлять пустым.";
+            } // E-mail format validation
+            else if (!preg_match("/^([a-z0-9+_\-]+)(\.[a-z0-9+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $email)) {
+                $errors['email'] = "Формат электронной почты недопустим.";
+            }
+            // PasswordValidation
+            if(empty($password)) {
+                $errors['password'] = 'Пожалуйста, введите пароль';
             }
         }
         return $errors;
@@ -180,7 +159,6 @@ class UserController
     {
         $input = trim($input);
         $input = stripslashes($input);
-        $input = htmlspecialchars($input);
-        return $input;
+        return htmlspecialchars($input);
     }
 }
