@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Registration Form 2</title>
+    <title>Login form</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -161,14 +161,18 @@
             <input type="email" name="email" placeholder="Email" required />
         </div>
         <div class="form-control">
-            <?php echo $emailErr; ?>
+            <div class="error">
+                <?php if (isset($errors['email'])) {echo $errors['email'];} ?>
+            </div>
         </div>
         <div class="input-field">
             <i class="fa fa-lock"></i>
             <input type="password" name="password" placeholder="Password" required />
         </div>
         <div class="form-control">
-            <?php echo $passwordErr; ?>
+            <div class="error">
+                <?php if (isset($errors['password'])) {echo $errors['password'];} ?>
+            </div>
         </div>
         <input class="button" name="foo" type="submit" value="Log in" >
     </form>

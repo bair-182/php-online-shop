@@ -1,6 +1,3 @@
-<!-- Form validation script -->
-<?php require_once './../handlers/registration_form_validation.php';?>
-
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -166,65 +163,67 @@
             <input type="text" name="name" placeholder="First Name" value="<?php echo $_POST["name"] ?? ''; ?>" />
         </div>
         <div class="form-control">
-            <?php if (isset($nameEmptyErr)) {
-                echo $nameEmptyErr;
-            } ?>
-            <?php if (isset($nameErr)) {
-                echo $nameErr;
-            } ?>
+            <div class="error">
+                <?php if (isset($errors['name'])) echo $errors['name']; ?>
+            </div>
         </div>
         <div class="input-field">
             <i class="fa fa-user"></i>
             <input type="text" name="surname" placeholder="Last Name" value="<?php echo $_POST["surname"] ?? ''; ?>" required />
         </div>
         <div class="form-control">
-            <?php if (isset($surnameEmptyErr)) {
-                echo $surnameEmptyErr;
-            } ?>
-            <?php if (isset($surnameErr)) {
-                echo $surnameErr;
-            } ?>
+            <div class="error">
+                <?php if (isset($errors['surname'])) {
+                    echo $errors['surname'];
+                } ?>
+            </div>
         </div>
         <div class="input-field">
             <i class="fa fa-envelope"></i>
             <input type="email" name="email" placeholder="Email" value="<?php echo $_POST["email"] ?? ''; ?>" required />
         </div>
         <div class="form-control">
-            <?php if (isset($emailEmptyErr)) {
-                echo $emailEmptyErr;
-            } ?>
-            <?php if (isset($emailErr)) {
-                echo $emailErr;
-            } ?>
+            <div class="error">
+                <?php if (isset($errors['email'])) {
+                    echo $errors['email'];
+                } ?>
+            </div>
         </div>
+
         <div class="input-field">
             <i class="fa fa-lock"></i>
             <input type="password" name="password" placeholder="Password" required />
         </div>
         <div class="form-control">
-            <?php if (isset($passwordErr)) {
-                echo $passwordErr;
-            } ?>
+            <div class="error">
+                <?php if (isset($errors['password'])) {
+                    echo $errors['password'];
+                } ?>
+            </div>
         </div>
         <div class="input-field">
             <i class="fa fa-lock"></i>
             <input type="password" name="cpassword" placeholder="Re-type Password" required />
         </div>
         <div class="form-control">
-            <?php if (isset($cpasswordErr)) {
-                echo $cpasswordErr;
-            } ?>
+            <div class="error">
+                <?php if (isset($errors['cpassword'])) {
+                    echo $errors['cpassword'];
+                } ?>
+            </div>
         </div>
         <div class="input-field">
             <input type="radio" name="gender" value="male" class="radio"
-            <?php if (isset($_POST['gender']) && $_POST['gender'] == 'male'): ?>checked='checked'<?php endif; ?> /> Male
+            <?php if (isset($_POST['gender']) && ($_POST['gender'] == 'male')): ?>checked='checked'<?php endif; ?> /> Male
             <input type="radio" name="gender" value="female"  class="radio"
-            <?php if (isset($_POST['gender']) && $_POST['gender'] ==  'female'): ?>checked='checked'<?php endif; ?> /> Female
+            <?php if (isset($_POST['gender']) && ($_POST['gender'] == 'female')): ?>checked='checked'<?php endif; ?> /> Female
         </div>
         <div class="form-control">
-            <?php if (isset($genderEmptyErr)) {
-                echo $genderEmptyErr;
-            } ?>
+            <div class="error">
+                <?php if (isset($errors['gender'])) {
+                    echo $errors['gender'];
+                } ?>
+            </div>
         </div>
         <div class="input-field select-option">
             <select name="country">
@@ -248,3 +247,4 @@
 </div>
 </body>
 </html>
+
