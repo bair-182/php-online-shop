@@ -116,9 +116,11 @@
         margin-bottom: 50px;
         transition: transform 0.5s;
     }
+
     .col-4 .product-description {
         min-height: 135px;
     }
+
     .col-4 img {
         width: 100%;
     }
@@ -134,6 +136,7 @@
         line-height: 60px;
         color: #555;
     }
+
     .title::after {
         content: "";
         background: #ff523b;
@@ -150,7 +153,6 @@
         color: #555;
         font-weight: normal;
     }
-
 
 
     .rating .fas {
@@ -172,6 +174,7 @@
     small {
         color: #555;
     }
+
     .brands {
         margin: 100px auto;
     }
@@ -191,6 +194,7 @@
         cursor: pointer;
         filter: grayscale(0);
     }
+
     /* footer */
 
     .footer {
@@ -244,6 +248,7 @@
     .app-logo {
         margin-top: 20px;
     }
+
     .app-logo img {
         width: 140px;
     }
@@ -277,6 +282,7 @@
             overflow: hidden;
             transition: max-height 0.5s;
         }
+
         nav ul li {
             display: block;
             margin-right: 50px;
@@ -287,6 +293,7 @@
         nav ul li a {
             color: #fff;
         }
+
         .menu-icon {
             display: block;
             cursor: pointer;
@@ -370,6 +377,7 @@
         background: #ff523b;
         font-weight: normal;
     }
+
     td {
         padding: 10px 5px;
     }
@@ -409,6 +417,7 @@
     th:last-child {
         text-align: right;
     }
+
     /* account page */
     .account-page {
         padding: 50px 0;
@@ -495,6 +504,7 @@
         .row {
             text-align: center;
         }
+
         .col-2,
         .col-3,
         .col-4 {
@@ -508,16 +518,17 @@
         .single-product .col-2 {
             padding: 20px 0;
         }
+
         .single-product h1 {
             font-size: 26px;
             line-height: 32px;
         }
+
         .cart-info p {
             display: none;
         }
     }
 </style>
-
 
 
 <!-- Header Section -->
@@ -526,28 +537,29 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="home"><img src="/assets/images/pokeball-png-45353.png" alt="RedStore" width="50px">  </a>
+                    <a href="home"><img src="/assets/images/pokeball-png-45353.png" alt="RedStore" width="50px"> </a>
                 </div>
                 <nav>
                     <ul id="MenuItems">
                         <li><a href="home">Home</a></li>
-                        <li><a href="product.html">Products</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="account.html">Account</a></li>
+                        <li><a href="">Products</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li><a href="">Account</a></li>
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="https://i.ibb.co/PNjjx3y/cart.png" alt="burger" width="30px" height="30px" /></a>
-                <img src="https://i.ibb.co/6XbqwjD/menu.png" alt="" class="menu-icon" onclick="menutoggle()" />
+                <a href="cart.html"><img src="https://i.ibb.co/PNjjx3y/cart.png" alt="burger" width="30px"
+                                         height="30px"/></a>
+                <img src="https://i.ibb.co/6XbqwjD/menu.png" alt="" class="menu-icon" onclick="menutoggle()"/>
             </div>
             <div class="row">
                 <div class="col-2">
                     <h1>
-                        Buy your personal Pokémon! <br />
+                        Buy your personal Pokémon! <br/>
                     </h1>
                     <p>
                         Success isn't always about greatness. It's about consistency.
-                        Consistent <br />hard work gains success. Greatness will come.
+                        Consistent <br/>hard work gains success. Greatness will come.
                     </p>
                 </div>
                 <div class="col-2">
@@ -564,35 +576,30 @@
 <!-- Block for products -->
 <div class="small-container">
     <h2 class="title">Popular Pokemon's</h2>
-    <div class="row">
-            <?php if (isset($pokemon)) {
-                foreach($pokemon as $el): ?>
-                    <div class="col-4">
-                            <img src="<?= $el["image"]; ?>" alt="<?= $el["title"]; ?>" />
+        <div class="row">
+            <?php if (isset($products)) {
+                foreach ($products as $el): ?>
+                        <div class="col-4">
+                            <img src="<?= $el["image"]; ?>" alt="<?= $el["title"]; ?>"/>
                             <strong><?= $el["title"]; ?></strong>
-                        <div>
-                            <div class="product-description">
-                                <p><?= $el["description"]; ?></p>
-                            </div>
-                            <div class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                            </div>
                             <div>
-                                <p>Цена:
-                                    <strong> <?= $el["price"]; ?> </strong>
-                                    ₽
-                                </p>
+                                <div class="product-description">
+                                    <p><?= $el["description"]; ?></p>
+                                </div>
+                                <div>
+                                    <p>Цена:
+                                        <strong> <?= $el["price"]; ?> </strong>
+                                        ₽
+                                    </p>
+                                </div>
+                                <form action="/add-product" method="POST">
+                                    <button type="submit" class="btn" name="addProductToCart" value="<?=$el['id']?>">Добавить в корзину</button>
+                                </form>
                             </div>
-                            <button class="btn" >В корзину</button>
                         </div>
-                    </div>
                 <?php endforeach;
             } ?>
-    </div>
+        </div>
 </div>
 
 
@@ -601,23 +608,23 @@
     <div class="small-container">
         <div class="row">
             <div class="col-5">
-                <img src="https://i.ibb.co/Gfwzz1S/logo-godrej.png" alt="" />
+                <img src="https://i.ibb.co/Gfwzz1S/logo-godrej.png" alt=""/>
             </div>
 
             <div class="col-5">
-                <img src="https://i.ibb.co/vjrRZFM/logo-oppo.png" alt="" />
+                <img src="https://i.ibb.co/vjrRZFM/logo-oppo.png" alt=""/>
             </div>
 
             <div class="col-5">
-                <img src="https://i.ibb.co/3zs234S/logo-coca-cola.png" alt="" />
+                <img src="https://i.ibb.co/3zs234S/logo-coca-cola.png" alt=""/>
             </div>
 
             <div class="col-5">
-                <img src="https://i.ibb.co/7Wt343W/logo-paypal.png" alt="" />
+                <img src="https://i.ibb.co/7Wt343W/logo-paypal.png" alt=""/>
             </div>
 
             <div class="col-5">
-                <img src="https://i.ibb.co/GVSNwJD/logo-philips.png" alt="" />
+                <img src="https://i.ibb.co/GVSNwJD/logo-philips.png" alt=""/>
             </div>
         </div>
     </div>
@@ -629,13 +636,13 @@
                 <h3>Download Our App</h3>
                 <p>Download App for Android and iso mobile phone.</p>
                 <div class="app-logo">
-                    <img src="https://i.ibb.co/KbPTYYQ/play-store.png" alt="" />
-                    <img src="https://i.ibb.co/hVM4X2p/app-store.png" alt="" />
+                    <img src="https://i.ibb.co/KbPTYYQ/play-store.png" alt=""/>
+                    <img src="https://i.ibb.co/hVM4X2p/app-store.png" alt=""/>
                 </div>
             </div>
 
             <div class="footer-col-2">
-                <img src="https://i.ibb.co/j3FNGj7/logo-white.png" alt="" />
+                <img src="https://i.ibb.co/j3FNGj7/logo-white.png" alt=""/>
                 <p>
                     Our Purpose Is To Sustainably Make the Pleasure and Benefits of
                     Sports Accessible to the Many.
@@ -662,7 +669,7 @@
                 </ul>
             </div>
         </div>
-        <hr />
+        <hr/>
         <p class="copyright">Copyright &copy; 2021 - Red Store</p>
     </div>
 </div>

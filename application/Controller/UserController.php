@@ -1,5 +1,9 @@
 <?php
 
+namespace Controller;
+
+use Model\User;
+
 class UserController
 {
     private User $userModel;
@@ -16,20 +20,12 @@ class UserController
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'POST') {
-
             $data = $_POST; // работаем с $data
             $errors = $this->validateRegistration($data);
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
             if (empty($errors)) {
-                $name = $data['name'];
-                $surname = $data['surname'];
-                $email = $data['email'];
-                $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-                $gender = $data['gender'];
-                $countryOption = $data['country'];
-
                 $this->userModel->createUser($data);
-
                 header('Location: /login');
             }
         }
@@ -49,11 +45,11 @@ class UserController
                 $email = $data['email'];
                 $password = $data['password'];
 
-                $user = $this->userModel->getOnlyEmail($email);
+                $user = $this->userModel->getOneByEmail($email);
 
                 if (isset($user['email'])) {
                     if ($user && password_verify($password, $user['password'])) {
-                        $_SESSION['user_id'] = 1;
+                        $_SESSION['user_id'] = $user['id'];
                         header('Location:/home');
                     } else {
                         $errors['password'] = 'Пароль неправильный';

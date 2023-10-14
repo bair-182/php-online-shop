@@ -1,5 +1,9 @@
 <?php
 
+namespace Model;
+
+use PDO;
+
 class User
 {
     private PDO $pdo;
@@ -11,7 +15,7 @@ class User
 
     public function createUser(array $data):array
     {
-        $stmt = $this->pdo->prepare(query: 'INSERT INTO users (
+        $stmt = $this->pdo->prepare('INSERT INTO users (
                    name, 
                    surname, 
                    email, 
@@ -36,9 +40,9 @@ class User
         return $stmt->fetch();
     }
 
-    public function getOnlyEmail(string $email):array
+    public function getOneByEmail(string $email):array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM users  WHERE email=:email");
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email=:email");
         $stmt->execute(['email' => $email]);
         return $stmt->fetch();
     }
