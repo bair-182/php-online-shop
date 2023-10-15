@@ -617,7 +617,17 @@
         align-items: flex-end;
         justify-content: end;
     }
-
+    .product_minus_plus {
+        display: flex;
+        flex-direction: row
+        margin: 5px 0;
+        align-items: center
+    }
+    .product_minus_plus .btn {
+        width: 60px;
+        height: 30px;
+        background-color:#b5b5b5;
+    }
     /*
     cart item + & -
     */
@@ -755,43 +765,6 @@
 </header>
 
 <body>
-
-
-
-<!-- Block for products -->
-
-<!--    <div class="payment_details">-->
-<!--        <h1>Платежная информация</h1>-->
-<!--        <div class="details_card">-->
-<!--            <div class="name_address">-->
-<!--                <div class="first_lastName">-->
-<!--                    <input type="text" placeholder="First Name" />-->
-<!--                    <input type="text" placeholder="Last Name" />-->
-<!--                </div>-->
-<!--                <div class="address">-->
-<!--                    <input type="text" onkeyup="change()" id="put" placeholder="Address" />-->
-<!--                    <input type="number" placeholder="Pincode" />-->
-<!--                    <input type="text" placeholder="Country" />-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <h1>Детали доставки</h1>-->
-<!--            <div class="shipping_card">-->
-<!--                <div class="new_card">-->
-<!--                    <h4>Same as personal</h4>-->
-<!--                    <p id="output"></p>-->
-<!--                    <p>400001</p>-->
-<!--                </div>-->
-<!--                <div class="add_savedcard">-->
-<!--                    <h4>Saved Address</h4>-->
-<!--                    <p></p>-->
-<!--                    <p>400053</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="proced_payment">-->
-<!--                <a href="">Procced to payment</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="small-container">
         <div class="order_summary">
             <h1>Ваша корзина</h1>
@@ -809,11 +782,15 @@
                                     <i class="fa fa-close"></i>
                                 </div>
                                 <div class="product_rate_info">
-                                    <h1><?= $el["price"]; ?> ₽</h1>
-                                    <div>
-                                        <span class="pqt-minus">-</span>
+                                    <h1><?= $el["total"]; ?> ₽</h1>
+                                    <div class="product_minus_plus">
+                                        <form action="/remove-product" method="POST">
+                                            <button type="submit" class="btn" name="decProductToCart" value="<?=$el['product_id']?>">-</button>
+                                        </form>
                                         <span class="pqt"><?= $el["count"]; ?></span>
-                                        <span class="pqt-plus">+</span>
+                                        <form action="/add-one-product" method="POST">
+                                            <button type="submit" class="btn" name="incProductToCart" value="<?=$el['product_id']?>">+</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -823,7 +800,7 @@
 
                 <hr />
                 <div class="order_total">
-                    <p>Total Amount</p>
+                    <p>Стоимость всей корзины</p>
                     <h2><?php if (isset($cartTotal[0])) echo $cartTotal[0] ?> ₽</h2>
                 </div>
             </div>

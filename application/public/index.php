@@ -28,7 +28,13 @@ if ($uri === '/registration') {
 } elseif ($uri === '/add-product') {
     $obj = new CartController();
     $obj->addProduct();
-} elseif ($uri === '/cart') {
+} elseif ($uri === '/remove-product') {
+    $obj = new CartController();
+    $obj->removeOneProduct();
+} elseif ($uri === '/add-one-product') {
+    $obj = new CartController();
+    $obj->addOneProduct();
+}elseif ($uri === '/cart') {
     $obj = new CartController();
     $obj->cartPageControl();
 }

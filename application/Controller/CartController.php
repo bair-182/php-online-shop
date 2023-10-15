@@ -44,4 +44,27 @@ class CartController
         }
         header('Location: /home');
     }
+
+    public function removeOneProduct(): void
+    {
+        session_start();
+        if (isset($_SESSION['user_id']))
+        {
+            $cart = $this->cartModel->getCart();
+
+            $this->cartModel->removeOneProduct($cart['id']);
+        }
+        header('Location: /cart');
+    }
+    public function addOneProduct(): void
+    {
+        session_start();
+        if (isset($_SESSION['user_id']))
+        {
+            $cart = $this->cartModel->getCart();
+
+            $this->cartModel->addOneProduct($cart['id']);
+        }
+        header('Location: /cart');
+    }
 }

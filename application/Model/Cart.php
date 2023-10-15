@@ -66,4 +66,23 @@ class Cart
     }
 
 
+    public function addOneProduct(INT $cartId):void
+    {
+        $data = $_POST;
+        $stmt = $this->pdo->prepare('INSERT INTO cart_product (product_id, cart_id) 
+                                                            VALUES (:product_id, :cart_id)');
+        $stmt->execute(['product_id' => $data['incProductToCart'],'cart_id' => $cartId] );
+        $stmt->fetch();
+    }
+    public function removeOneProduct(INT $cartId): void
+    {
+        $data = $_POST;
+        $stmt = $this->pdo->prepare('delete from cart_product where cart_id=:cart_id AND product_id=:product_id
+                                                                and ctid = (select min(ctid)
+                                                          from cart_product
+                                                          where cart_id=:cart_id AND product_id=:product_id);');
+        $stmt->execute(['product_id' => $data['decProductToCart'],'cart_id' => $cartId] );
+        $stmt->fetch();
+    }
+
 }
