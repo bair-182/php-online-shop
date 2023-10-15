@@ -568,7 +568,7 @@
     */
     .summary_card {
         background-color: #fff;
-        min-width: 640px;
+        min-width: 150px;
         min-height: 400px;
         max-width: 110vh;
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
@@ -593,7 +593,6 @@
     .card_item .product_img img {
         height: 80px;
         margin-right: 20px;
-        width: 70px;
         border-radius: 5px;
     }
 
@@ -851,7 +850,18 @@
         <p class="copyright">Copyright &copy; 2021 - Red Store</p>
     </div>
 </div>
+    <script>
+        const MenuItems = document.getElementById('MenuItems');
+        MenuItems.style.maxHeight = '0px';
 
+        function menutoggle() {
+            if (MenuItems.style.maxHeight === '0px') {
+                MenuItems.style.maxHeight = '200px';
+            } else {
+                MenuItems.style.maxHeight = '0px';
+            }
+        }
+    </script>
 
 </body>
 </html>
