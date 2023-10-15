@@ -39,8 +39,29 @@ class Cart
 
     public function getProduct(INT $cart_id):array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM cart_product WHERE cart_id=:cart_id");
+        $stmt = $this->pdo->prepare('SELECT
+                                                product_id,
+                                                p.title,
+                                                p.description,
+                                                p.price,
+                                                p.image,
+                                                count(product_id),
+                                                p.price*count(product_id) AS total
+                                            FROM cart_product
+                                                JOIN public.products p on cart_product.product_id = p.id
+                                            WHERE cart_id=:cart_id
+                                            group by product_id, p.title, p.description, p.price, p.image
+                                            ORDER BY product_id');
         $stmt->execute(['cart_id' => $cart_id]);
+        return $stmt->fetchAll();
+    }
+
+    public function getTotalOfCart(INT $cartId):array
+    {
+        $stmt = $this->pdo->prepare('SELECT SUM(COALESCE(p.price)) FROM cart_product
+                                            JOIN public.products p on cart_product.product_id = p.id
+                                            WHERE cart_id=:cart_id');
+        $stmt->execute(['cart_id' => $cartId]);
         return $stmt->fetch();
     }
 

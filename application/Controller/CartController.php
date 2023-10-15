@@ -14,6 +14,23 @@ class CartController
         $this->cartModel = new Cart();
     }
 
+    public function cartPageControl(): void
+    {
+        session_start();
+
+        if (isset($_SESSION['user_id'])) {
+
+            $cart = $this->cartModel->getCart();
+
+            $cartProducts = $this->cartModel->getProduct($cart['id']);
+            $cartTotal = $this->cartModel->getTotalOfCart($cart['id']);
+
+            require_once './../View/cart.phtml';
+        } else {
+            header('Location: /login');
+        }
+    }
+
     public function addProduct(): void
     {
         session_start();

@@ -14,6 +14,7 @@
 
     body {
         font-family: "Poppins", sans-serif;
+
     }
 
     .navbar {
@@ -457,6 +458,8 @@
         transition: transform 1s;
     }
 
+
+
     form input {
         width: 100%;
         height: 30px;
@@ -528,6 +531,200 @@
             display: none;
         }
     }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Nunito", sans-serif;
+    }
+
+    h1 {
+        font-size: 16px;
+        margin: 5px;
+    }
+    .cart_container {
+        width: 100%;
+        height: 92vh;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: #f9fafc;
+    }
+
+    /*
+    Payment Information card
+    */
+    .details_card {
+        width: 700px;
+        height: 400px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    /*
+    Order Summary Card
+    */
+    .summary_card {
+        background-color: #fff;
+        min-width: 640px;
+        min-height: 400px;
+        max-width: 110vh;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    /*
+    Order Card Item Card
+    */
+    .card_item {
+        display: flex;
+        position: relative;
+        margin: 10px 0;
+    }
+    .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+    }
+
+    .card_item .product_img img {
+        height: 80px;
+        margin-right: 20px;
+        width: 70px;
+        border-radius: 5px;
+    }
+
+    .product_info {
+        width: 100%;
+    }
+    .product_info h1 {
+        font-size: 20px;
+        color: #1e212d;
+        margin: 5px 0;
+    }
+
+    .product_info p {
+        color: #a1a1a1;
+        font-size: 14px;
+    }
+    .product_rate_info {
+        display: flex;
+        flex-direction: column;
+        margin: 5px 0;
+        align-items: flex-end;
+        justify-content: end;
+    }
+
+    /*
+    cart item + & -
+    */
+    .pqt {
+        font-size: 20px;
+        line-height: 30px;
+        width: 30px;
+        text-align: center;
+    }
+
+    .pqt-plus,
+    .pqt-minus {
+        background: #fcfcfc;
+        border: none;
+        font-size: 20px;
+        height: 100%;
+        padding: 0 15px;
+    }
+    .pqt-plus:hover,
+    .pqt-minus:hover {
+        background: #53b5aa;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .pqt-plus {
+        line-height: 30px;
+    }
+
+    .pqt-minus {
+        line-height: 30px;
+    }
+    /*
+    Order price & total
+    */
+    .order_price,
+    .order_service,
+    .order_total {
+        display: flex;
+
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .order_price p,
+    .order_service p {
+        color: #a1a1a1;
+    }
+
+    .order_total p {
+        font-weight: 600;
+    }
+
+    /*
+    Payment Information all input
+    */
+
+    input {
+        outline: 0;
+        background: #f2f2f2;
+        border-radius: 4px;
+        width: 100%;
+        border: 0;
+        caret-color: #4f5d7e;
+        margin: 10px 15px;
+        padding: 15px 20px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .first_lastName,
+    .shipping_card,
+    .address {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+
+    .new_card {
+        width: 100%;
+        height: 100px;
+        border: 2px solid #53b5aa;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .add_savedcard {
+        width: 100%;
+        height: 100px;
+        border: 2px solid #a1a1a1;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+    /*
+    Procced Payment button
+    */
+    .proced_payment a {
+        padding: 10px 20px;
+        width: 200px;
+        border: 2px solid #f5f5f5;
+        background-color: #53b5aa;
+        color: #000;
+        margin-left: 10px;
+        cursor: pointer;
+        text-decoration: none;
+    }
 </style>
 
 
@@ -549,22 +746,8 @@
                     </ul>
                 </nav>
                 <a href="cart"><img src="https://i.ibb.co/PNjjx3y/cart.png" alt="burger" width="30px"
-                                         height="30px"/></a>
+                                    height="30px"/></a>
                 <img src="https://i.ibb.co/6XbqwjD/menu.png" alt="" class="menu-icon" onclick="menutoggle()"/>
-            </div>
-            <div class="row">
-                <div class="col-2">
-                    <h1>
-                        Buy your personal Pokémon! <br/>
-                    </h1>
-                    <p>
-                        Success isn't always about greatness. It's about consistency.
-                        Consistent <br/>hard work gains success. Greatness will come.
-                    </p>
-                </div>
-                <div class="col-2">
-                    <img src="/assets/images/pokemon_poster.png" alt="poster" width="400px"/>
-                </div>
             </div>
         </div>
     </div>
@@ -573,62 +756,80 @@
 
 <body>
 
+
+
 <!-- Block for products -->
-<div class="small-container">
-    <h2 class="title">Popular Pokemon's</h2>
-        <div class="row">
-            <?php if (isset($products)) {
-                foreach ($products as $el): ?>
-                        <div class="col-4">
-                            <img src="<?= $el["image"]; ?>" alt="<?= $el["title"]; ?>"/>
-                            <strong><?= $el["title"]; ?></strong>
-                            <div>
-                                <div class="product-description">
-                                    <p><?= $el["description"]; ?></p>
+
+<!--    <div class="payment_details">-->
+<!--        <h1>Платежная информация</h1>-->
+<!--        <div class="details_card">-->
+<!--            <div class="name_address">-->
+<!--                <div class="first_lastName">-->
+<!--                    <input type="text" placeholder="First Name" />-->
+<!--                    <input type="text" placeholder="Last Name" />-->
+<!--                </div>-->
+<!--                <div class="address">-->
+<!--                    <input type="text" onkeyup="change()" id="put" placeholder="Address" />-->
+<!--                    <input type="number" placeholder="Pincode" />-->
+<!--                    <input type="text" placeholder="Country" />-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <h1>Детали доставки</h1>-->
+<!--            <div class="shipping_card">-->
+<!--                <div class="new_card">-->
+<!--                    <h4>Same as personal</h4>-->
+<!--                    <p id="output"></p>-->
+<!--                    <p>400001</p>-->
+<!--                </div>-->
+<!--                <div class="add_savedcard">-->
+<!--                    <h4>Saved Address</h4>-->
+<!--                    <p></p>-->
+<!--                    <p>400053</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="proced_payment">-->
+<!--                <a href="">Procced to payment</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="small-container">
+        <div class="order_summary">
+            <h1>Ваша корзина</h1>
+            <div class="summary_card">
+                <?php if (isset($cartProducts)) {
+                    foreach ($cartProducts as $el): ?>
+                        <div class="card_item">
+                            <div class="product_img">
+                                <img src="<?= $el["image"]; ?>" alt="<?= $el["title"]; ?>" />
+                            </div>
+                            <div class="product_info">
+                                <h1><?= $el["title"]; ?></h1>
+                                <p><?= $el["description"]; ?></p>
+                                <div class="close-btn">
+                                    <i class="fa fa-close"></i>
                                 </div>
-                                <div>
-                                    <p>Цена:
-                                        <strong> <?= $el["price"]; ?> </strong>
-                                        ₽
-                                    </p>
+                                <div class="product_rate_info">
+                                    <h1><?= $el["price"]; ?> ₽</h1>
+                                    <div>
+                                        <span class="pqt-minus">-</span>
+                                        <span class="pqt"><?= $el["count"]; ?></span>
+                                        <span class="pqt-plus">+</span>
+                                    </div>
                                 </div>
-                                <form action="/add-product" method="POST">
-                                    <button type="submit" class="btn" name="addProductToCart" value="<?=$el['id']?>">Добавить в корзину</button>
-                                </form>
                             </div>
                         </div>
-                <?php endforeach;
-            } ?>
-        </div>
-</div>
+                    <?php endforeach;
+                } ?>
 
-
-<!-- Block for brands -->
-<div class="brands">
-    <div class="small-container">
-        <div class="row">
-            <div class="col-5">
-                <img src="https://i.ibb.co/Gfwzz1S/logo-godrej.png" alt=""/>
-            </div>
-
-            <div class="col-5">
-                <img src="https://i.ibb.co/vjrRZFM/logo-oppo.png" alt=""/>
-            </div>
-
-            <div class="col-5">
-                <img src="https://i.ibb.co/3zs234S/logo-coca-cola.png" alt=""/>
-            </div>
-
-            <div class="col-5">
-                <img src="https://i.ibb.co/7Wt343W/logo-paypal.png" alt=""/>
-            </div>
-
-            <div class="col-5">
-                <img src="https://i.ibb.co/GVSNwJD/logo-philips.png" alt=""/>
+                <hr />
+                <div class="order_total">
+                    <p>Total Amount</p>
+                    <h2><?php if (isset($cartTotal[0])) echo $cartTotal[0] ?> ₽</h2>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
 <div class="footer">
     <div class="container">
         <div class="row">
@@ -674,18 +875,6 @@
     </div>
 </div>
 
-<script>
-    const MenuItems = document.getElementById('MenuItems');
-    MenuItems.style.maxHeight = '0px';
-
-    function menutoggle() {
-        if (MenuItems.style.maxHeight === '0px') {
-            MenuItems.style.maxHeight = '200px';
-        } else {
-            MenuItems.style.maxHeight = '0px';
-        }
-    }
-</script>
 
 </body>
 </html>

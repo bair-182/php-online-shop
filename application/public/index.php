@@ -30,7 +30,7 @@ if ($uri === '/registration') {
     $obj->addProduct();
 } elseif ($uri === '/cart') {
     $obj = new CartController();
-    $obj->addProduct();
+    $obj->cartPageControl();
 }
 
 else header('Location: /home');
